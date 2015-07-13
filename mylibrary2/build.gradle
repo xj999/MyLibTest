@@ -1,0 +1,47 @@
+apply plugin: 'android-library'
+
+android {
+    compileSdkVersion 22
+    buildToolsVersion "22.0.1"
+
+    defaultConfig {
+        minSdkVersion 9
+        targetSdkVersion 22
+        versionCode 1
+        versionName "1.0"
+    }
+    buildTypes {
+        release {
+            minifyEnabled true
+            proguardFiles  'proguard-rules.pro'
+        }
+    }
+}
+
+apply plugin: 'maven'
+apply plugin: 'signing'
+signing {
+    required { has("release") && gradle.taskGraph.hasTask("uploadArchives") }
+    sign configurations.archives
+}
+uploadArchives {
+    configuration = configurations.archives
+    repositories.mavenDeployer {
+        beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
+        repository(url: 'http://nexus.epweike.net:8081/nexus/content/repositories/epwk/') {
+//仓库地址
+            authentication(userName: "admin",//用户名
+                    password: "admin123")//密码
+        }
+
+        pom.project {
+            name 'lxj-library'
+            packaging 'aar'
+            description 'my_test_library'
+            url 'http://nexus.epweike.net:8081/nexus/content/repositories/epwk/ '//仓库地址
+            groupId "com.epwk"
+            artifactId "myLib" //LibA
+            version 1.0
+        }
+    }
+}
