@@ -19,29 +19,51 @@ android {
 }
 
 apply plugin: 'maven'
-apply plugin: 'signing'
-signing {
-    required { has("release") && gradle.taskGraph.hasTask("uploadArchives") }
-    sign configurations.archives
+//apply plugin: 'signing'
+/**
+ * 以下是设置将lib项目打包成arr并且上传到nexus仓库的操作
+ */
+//signing {
+//    required { has("release") && gradle.taskGraph.hasTask("uploadArchives") }
+//    sign configurations.archives
+//}
+//uploadArchives {
+//    configuration = configurations.archives
+//    repositories.mavenDeployer {
+//        beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
+//        repository(url: 'http://nexus.epweike.net:8081/nexus/content/repositories/epwk/') {
+////仓库地址
+//            authentication(userName: "admin",//用户名
+//                    password: "admin123")//密码
+//        }
+//
+//        pom.project {
+//            name 'lxj-library'
+//            packaging 'aar'
+//            description 'my_test_library'
+//            url 'http://nexus.epweike.net:8081/nexus/content/repositories/epwk/ '//仓库地址
+//            groupId "com.epwk"
+//            artifactId "myLib" //LibA
+//            version 1.1
+//        }
+//    }
+//}
+/**
+ * 以下是设置将lib项目打包成arr并且上传到本地仓库的操作
+ */
+ext {
+    PUBLISH_GROUP_ID = 'com.libs'
+    PUBLISH_ARTIFACT_ID = 'my_test_lib'
+    PUBLISH_VERSION = android.defaultConfig.versionName
 }
 uploadArchives {
-    configuration = configurations.archives
     repositories.mavenDeployer {
-        beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
-        repository(url: 'http://nexus.epweike.net:8081/nexus/content/repositories/epwk/') {
-//仓库地址
-            authentication(userName: "admin",//用户名
-                    password: "admin123")//密码
-        }
-
+        def deployPath = file(getProperty('aar.deployPath'))
+        repository(url: "file://${deployPath.absolutePath}")
         pom.project {
-            name 'lxj-library'
-            packaging 'aar'
-            description 'my_test_library'
-            url 'http://nexus.epweike.net:8081/nexus/content/repositories/epwk/ '//仓库地址
-            groupId "com.epwk"
-            artifactId "myLib" //LibA
-            version 1.1
+            groupId project.PUBLISH_GROUP_ID
+            artifactId project.PUBLISH_ARTIFACT_ID
+            version project.PUBLISH_VERSION
         }
     }
 }
