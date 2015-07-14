@@ -53,7 +53,7 @@ apply plugin: 'maven'
  */
 ext {
     PUBLISH_GROUP_ID = 'com.libs'
-    PUBLISH_ARTIFACT_ID = 'my_test_lib'
+    PUBLISH_ARTIFACT_ID = 'MyLib'
     PUBLISH_VERSION = android.defaultConfig.versionName
 }
 uploadArchives {
@@ -64,6 +64,8 @@ uploadArchives {
             groupId project.PUBLISH_GROUP_ID
             artifactId project.PUBLISH_ARTIFACT_ID
             version project.PUBLISH_VERSION
+            packaging 'aar'
+            description 'my_test_library'
         }
     }
 }

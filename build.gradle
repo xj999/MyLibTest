@@ -21,16 +21,16 @@ buildscript {
 
 allprojects {
     repositories {
-        maven {
-            credentials {
-                username 'admin'
-                password 'admin123'
-            }
-            url "http://nexus.epweike.net:8081/nexus/content/repositories/lxj/"
-        }
-
+//        maven {
+//            credentials {
+//                username 'admin'
+//                password 'admin123'
+//            }
+//            url "http://nexus.epweike.net:8081/nexus/content/repositories/lxj/"
+//        }
+        jcenter()
     }
 
 }
-apply plugin: 'android-reporting'
-apply plugin: 'maven'
+//apply plugin: 'android-reporting'
+//apply plugin: 'maven'
