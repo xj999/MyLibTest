@@ -41,7 +41,7 @@ uploadArchives {
             url 'http://nexus.epweike.net:8081/nexus/content/repositories/epwk/ '//仓库地址
             groupId "com.epwk"
             artifactId "myLib" //LibA
-            version 1.0
+            version 1.1
         }
     }
 }
