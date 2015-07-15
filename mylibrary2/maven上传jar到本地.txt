@@ -1,0 +1,2 @@
+mvn install:install-file -DgroupId=com.jars -DartifactId=litepal -Dversion=1.2.1 -Dfile=F:\AndroidStudioProjects\LitePal\downloads\litepal-1.2.1.jar -Dpackaging=jar -DgeneratePom=true -DlocalRepositoryPath=F:\MAVEN\repository\MyRepo 
+-DcreateChecksum=true  
